@@ -14,6 +14,8 @@ const Login = () => {
     const obj = {};
     for (let [k, v] of fd.entries()) obj[k] = v;
 
+    console.log("Oggetto inviato:", obj);
+
     try {
       const res = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
@@ -44,12 +46,12 @@ const Login = () => {
               )}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Indirizzo Email</Form.Label>
-                <Form.Control type="email" placeholder="Inserisci la tua email" required />
+                <Form.Control type="email" name="email" placeholder="Inserisci la tua email" required />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" required />
+                <Form.Control type="password" name="password" placeholder="Password" required />
               </Form.Group>
               <Button variant="primary" type="submit" className="w-100">
                 Login

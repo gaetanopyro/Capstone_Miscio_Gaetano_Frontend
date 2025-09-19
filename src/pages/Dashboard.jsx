@@ -5,32 +5,51 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   const [tickets, setTickets] = useState([]);
   const [error, setError] = useState(null);
+  const [role, setRole] = useState("");
+
+  const token = localStorage.getItem("token");
+
+  const getRoleFromToken = () => {
+    if (!token) return "";
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.role || "";
+    } catch {
+      return "";
+    }
+  };
+
+  const fetchTickets = async () => {
+    const userRole = getRoleFromToken();
+    setRole(userRole);
+
+    const endpoint = userRole === "ADMIN" ? "/tickets" : "/tickets/me";
+
+    try {
+      const res = await fetch(`http://localhost:3001${endpoint}`, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      if (!res.ok) throw new Error("Errore caricamento ticket");
+      const data = await res.json();
+      setTickets(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const res = await fetch("http://localhost:3001/tickets/me", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
-        if (!res.ok) throw new Error("Errore caricamento ticket");
-        const data = await res.json();
-        setTickets(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
     fetchTickets();
   }, []);
 
   return (
     <div className="p-4">
-      <h2>I tuoi ticket</h2>
+      <h1>📊 Dashboard</h1>
+      <p>Benvenuto! Sei loggato correttamente 🎉</p>
+      <p>
+        Torna alla <Link to="/">Home</Link>
+      </p>
       {error && <Alert variant="danger">{error}</Alert>}
-      <Button as={Link} to="/create" className="mb-3">
-        + Crea Ticket
-      </Button>
+      <h2>Ticket {role === "ADMIN" && "(Tutti i ticket)"}</h2>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -38,6 +57,8 @@ const Dashboard = () => {
             <th>Descrizione</th>
             <th>Status</th>
             <th>Priorità</th>
+            {role === "ADMIN" && <th>Utente</th>}
+            <th>Azioni</th>
           </tr>
         </thead>
         <tbody>
@@ -48,11 +69,17 @@ const Dashboard = () => {
                 <td>{t.description}</td>
                 <td>{t.status}</td>
                 <td>{t.priority}</td>
+                {role === "ADMIN" && <td>{t.user?.username}</td>}
+                <td>
+                  <Button variant="warning" size="sm" className="me-2" as={Link} to={`/edit/${t.id}`}>
+                    Modifica
+                  </Button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="4">Nessun ticket trovato</td>
+              <td colSpan={role === "ADMIN" ? 6 : 5}>Nessun ticket trovato</td>
             </tr>
           )}
         </tbody>

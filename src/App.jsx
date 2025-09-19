@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateTicket from "./pages/CreateTicket";
+import Dashboard from "./pages/Dashboard";
+import EditTicket from "./pages/EditTicket";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/edit/:id" element={<EditTicket />} />
           <Route path="/create" element={<CreateTicket />} />
         </Routes>
       </Container>

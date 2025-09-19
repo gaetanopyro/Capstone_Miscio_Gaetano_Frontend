@@ -4,7 +4,7 @@ const Home = () => {
   const token = localStorage.getItem("token");
   return (
     <div className="p-4">
-      <h1>Benvenuto su RescueDesk</h1>
+      <h1>🏠 Benvenuto su RescueDesk</h1>
       {!token ? (
         <>
           <p>
@@ -12,9 +12,14 @@ const Home = () => {
           </p>
         </>
       ) : (
-        <p>
-          Vai alla tua <Link to="/dashboard">Dashboard</Link> per gestire i ticket.
-        </p>
+        <>
+          <p>
+            Vai alla tua <Link to="/dashboard">Dashboard</Link> per gestire i ticket.
+          </p>
+          <p>
+            Torna alla <Link to="/">Home</Link>
+          </p>
+        </>
       )}
     </div>
   );
