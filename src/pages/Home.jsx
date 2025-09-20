@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const token = localStorage.getItem("token");
   return (
-    <div className="p-4">
+    <div className="home-bg p-4">
       <h1>🏠 Benvenuto su RescueDesk</h1>
       {!token ? (
         <>

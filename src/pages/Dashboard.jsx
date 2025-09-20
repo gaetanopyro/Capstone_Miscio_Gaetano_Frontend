@@ -36,6 +36,9 @@ const Dashboard = () => {
       <h1>📊 Dashboard</h1>
       <p>Benvenuto! Sei loggato correttamente 🎉</p>
       <div className="mb-3">
+        <p>
+          Torna alla <Link to="/">Home</Link>
+        </p>
         <Button as={Link} to="/create" variant="success">
           ➕ Crea Ticket
         </Button>
