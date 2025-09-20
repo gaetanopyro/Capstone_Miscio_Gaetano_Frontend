@@ -53,6 +53,15 @@ const Register = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" name="password" placeholder="Password" required />
               </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicRole">
+                <Form.Label>Ruolo</Form.Label>
+                <Form.Select name="role" defaultValue="USER">
+                  <option value="USER">USER</option>
+                  <option value="ADMIN">ADMIN</option>
+                </Form.Select>
+              </Form.Group>
+
               <Button variant="primary" type="submit" className="w-100">
                 Registrati
               </Button>

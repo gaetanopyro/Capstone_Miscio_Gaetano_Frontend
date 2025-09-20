@@ -9,36 +9,25 @@ const Dashboard = () => {
 
   const token = localStorage.getItem("token");
 
-  const getRoleFromToken = () => {
-    if (!token) return "";
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      console.log("Payload token:", payload);
-      return payload.role || "";
-    } catch {
-      return "";
-    }
-  };
-
-  const fetchTickets = async () => {
-    const userRole = getRoleFromToken();
+  useEffect(() => {
+    const userRole = localStorage.getItem("role") || "USER";
     setRole(userRole);
 
     const endpoint = userRole === "ADMIN" ? "/tickets" : "/tickets/me";
 
-    try {
-      const res = await fetch(`http://localhost:3001${endpoint}`, {
-        headers: { Authorization: "Bearer " + token },
-      });
-      if (!res.ok) throw new Error("Errore caricamento ticket");
-      const data = await res.json();
-      setTickets(data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    const fetchTickets = async () => {
+      try {
+        const res = await fetch(`http://localhost:3001${endpoint}`, {
+          headers: { Authorization: "Bearer " + token },
+        });
+        if (!res.ok) throw new Error("Errore caricamento ticket");
+        const data = await res.json();
+        setTickets(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-  useEffect(() => {
     fetchTickets();
   }, []);
 
@@ -46,9 +35,11 @@ const Dashboard = () => {
     <div className="p-4">
       <h1>📊 Dashboard</h1>
       <p>Benvenuto! Sei loggato correttamente 🎉</p>
-      <p>
-        Torna alla <Link to="/">Home</Link>
-      </p>
+      <div className="mb-3">
+        <Button as={Link} to="/create" variant="success">
+          ➕ Crea Ticket
+        </Button>
+      </div>
       {error && <Alert variant="danger">{error}</Alert>}
       <h2>Ticket {role === "ADMIN" && "(Tutti i ticket)"}</h2>
       <Table striped bordered hover>

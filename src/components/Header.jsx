@@ -6,6 +6,7 @@ const Header = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     window.location.href = "/login";
   };
 
@@ -15,13 +16,7 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/" className="ms-4 text-dark fw-semibold fs-2">
           RescueDesk
         </Navbar.Brand>
-        <Nav className="me-auto">
-          {token && (
-            <Nav.Link as={Link} to="/create" className="text-dark fs-5 pt-3">
-              Crea Ticket
-            </Nav.Link>
-          )}
-        </Nav>
+        <Nav className="me-auto"></Nav>
         <Nav>
           {!token ? (
             <>
