@@ -13,12 +13,12 @@ const Home = () => {
         </>
       ) : (
         <>
-          <p>
+          <h5>
             Vai alla tua <Link to="/dashboard">Dashboard</Link> per gestire i ticket.
-          </p>
-          <p>
+          </h5>
+          <h5>
             Torna alla <Link to="/">Home</Link>
-          </p>
+          </h5>
         </>
       )}
     </div>

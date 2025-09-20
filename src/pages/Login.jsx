@@ -24,7 +24,9 @@ const Login = () => {
       });
       if (!res.ok) throw new Error("Credenziali non valide");
       const data = await res.json();
+
       localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("role", data.role);
       setDone(true);
     } catch (err) {
       setError(err.message);
