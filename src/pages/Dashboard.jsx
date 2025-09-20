@@ -13,6 +13,7 @@ const Dashboard = () => {
     if (!token) return "";
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
+      console.log("Payload token:", payload);
       return payload.role || "";
     } catch {
       return "";

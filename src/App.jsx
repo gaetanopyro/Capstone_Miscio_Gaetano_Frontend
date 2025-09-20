@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Container className="mt-3">
+      <Container fluid className="mt-3">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
