@@ -34,7 +34,6 @@ const Dashboard = () => {
   return (
     <div className="p-4">
       <h1>📊 Dashboard</h1>
-      <p>Benvenuto! Sei loggato correttamente 🎉</p>
       <div className="mb-3">
         <p>
           Torna alla <Link to="/">Home</Link>
